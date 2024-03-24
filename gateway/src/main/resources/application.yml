@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        -   id: demo1
+            uri: lb://FIRST-SERVICE-SERVER
+            predicates:
+              - Path=/demo1/**
+            filters:
+              - GlobalFilter
+        -   id: demo2
+            uri: lb://SECOND-SERVICE-SERVER
+            predicates:
+              - Path=/demo2/**
+            filters:
+              - GlobalFilter
+        -   id: demo3
+            uri: lb://THIRD-SERVICE-SERVER
+            predicates:
+              - Path=/demo3/**
+            filters:
+              - GlobalFilter
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+
+main:
+  web-application-type: reactive
